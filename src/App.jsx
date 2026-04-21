@@ -1,11 +1,14 @@
 import React from "react";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
+import CinematicHero from "./components/CinematicHero";
 import About from "./components/About";
 import FeaturedServices from "./components/FeaturedServices";
 import ScrollingServices from "./components/ScrollingServices";
 import WhyChooseCetro from "./components/WhyChooseCetro";
+import TrustedPartnerSection from "./components/TrustedPartnerSection";
 import whywechosehumanimage from "./assets/images/whywechosehumanpic.jpg";
+import Footer from "./components/Footer";
 
 const App = () => {
   return (
@@ -16,6 +19,9 @@ const App = () => {
       <ScrollingServices />
       <WhyChooseCetro whywechosehumanimage={whywechosehumanimage} />
       <FeaturedServices />
+      <TrustedPartnerSection />
+      <CinematicHero />
+      <Footer/>
     </div>
   );
 };

@@ -96,7 +96,7 @@ const Header = () => {
                       onMouseLeave={() => setHoveredNav(null)}
                       onClick={() => setActiveLink(label)}
                     >
-                      <a href="#" className="flex items-center gap-1 text-[15px] xl:text-[16px] font-semibold font-['Inter'] transition-colors duration-200"
+                      <a href="#" className="flex items-center gap-1 text-[15px] xl:text-[16px] font-semibold font-['Roboto_Flex'] transition-colors duration-200"
                         style={{ color: (isActive || isHovered) ? BRAND_GREEN : '#ffffff' }}>
                         <span className="relative">
                           {label}
@@ -133,7 +133,7 @@ const Header = () => {
                   <PhoneCall className="w-7 h-7 text-white" strokeWidth={1.5} />
                   <div className="leading-tight">
                     <p className="text-[13px] font-medium text-white font-['Roboto_Condensed']">Need Help?</p>
-                    <p className="text-[22px] font-bold text-white font-['Roboto_Condensed'] tracking-tighter">(+480) 123 678</p>
+                    <p className="text-[22px] font-bold text-white font-['Boldonse'] tracking-tighter">(+480) 123 678</p>
                   </div>
                 </div>
 

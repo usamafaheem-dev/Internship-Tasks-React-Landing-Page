@@ -1,140 +1,126 @@
-import { Mail, Phone, MapPin, Send, ArrowRight } from 'lucide-react';
-import logo from '../assets/images/logo.png';
-
-const Facebook = (props) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
-  </svg>
-);
-
-const Twitter = (props) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-    <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
-  </svg>
-);
-
-const Instagram = (props) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-    <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
-    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
-  </svg>
-);
-
-const Linkedin = (props) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-    <rect width="4" height="12" x="2" y="9" />
-    <circle cx="4" cy="4" r="2" />
-  </svg>
-);
+import React, { useState, useEffect } from "react";
+import { MapPin, ArrowUpRight, ArrowUp } from "lucide-react";
+import footerbg from "../assets/images/footerbg.jpg"; 
+import logo from "../assets/images/logo.png"; 
 
 const Footer = () => {
-  const BRAND_GREEN = '#00A650';
+  const [isVisible, setIsVisible] = useState(false);
+
+  // Scroll button visibility logic
+  useEffect(() => {
+    const toggleVisibility = () => {
+      if (window.pageYOffset > 300) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+    };
+    window.addEventListener("scroll", toggleVisibility);
+    return () => window.removeEventListener("scroll", toggleVisibility);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
-    <footer className="bg-[#111111] text-white pt-20 pb-10 font-['Inter']">
-      <div className="w-full px-6">
-        {/* Main Footer Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+    <footer className="relative w-full min-h-[120vh] text-white overflow-hidden bg-[#0a1a16] flex flex-col justify-between">
+      
+      {/* Background with Lighter Overlay (More Visible Image) */}
+      <div 
+        className="absolute inset-0 w-full h-full bg-cover bg-center"
+        style={{ backgroundImage: `url(${footerbg})` }}
+      />
+      <div className="absolute inset-0 bg-black/80" /> {/* Reduced opacity to 60% */}
+
+      <div className="relative z-10 container mx-auto px-6 md:px-12 w-full flex flex-col justify-between flex-grow">
+        
+        {/* --- SECTION 1: Newsletter --- */}
+        <div className="pt-20 pb-12 flex flex-col items-center text-center space-y-8 border-b border-white/10">
+          <h2 className="text-[32px] md:text-[46px] font-black leading-tight tracking-tight">
+            Join Our <span className="text-[#00a650]">Newsletter Stay</span> <br className="hidden md:block" />
+            Up To <span className="text-[#00a650]">Date</span>
+          </h2>
           
-          {/* 1. About Section */}
-          <div className="space-y-6">
-            <img src={logo} alt="Cetro" className="h-12 w-auto" />
-            <p className="text-gray-400 leading-relaxed text-[15px]">
-              Professional cleaning services tailored to your needs. We bring sparkle and shine to your offices and homes with our expert team and eco-friendly products.
-            </p>
-            <div className="flex gap-4">
-              {[Facebook, Twitter, Instagram, Linkedin].map((Icon, idx) => (
-                <a key={idx} href="#" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-[#00A650] hover:border-[#00A650] transition-all duration-300">
-                  <Icon size={18} />
-                </a>
-              ))}
-            </div>
-          </div>
-
-          {/* 2. Quick Links */}
-          <div>
-            <h4 className="text-xl font-bold mb-8 relative inline-block">
-              Quick Links
-              <span className="absolute -bottom-2 left-0 w-12 h-1 bg-[#00A650]"></span>
-            </h4>
-            <ul className="space-y-4">
-              {['Home', 'About Us', 'Services', 'Our Projects', 'Pricing Plan', 'Contact Us'].map((item) => (
-                <li key={item}>
-                  <a href="#" className="flex items-center gap-2 text-gray-400 hover:text-[#00A650] hover:translate-x-2 transition-all duration-300">
-                    <ArrowRight size={14} />
-                    {item}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* 3. Our Services */}
-          <div>
-            <h4 className="text-xl font-bold mb-8 relative inline-block">
-              Our Services
-              <span className="absolute -bottom-2 left-0 w-12 h-1 bg-[#00A650]"></span>
-            </h4>
-            <ul className="space-y-4">
-              {['Office Cleaning', 'Residential Cleaning', 'Commercial Cleaning', 'Industrial Cleaning', 'Window Cleaning', 'Carpet Cleaning'].map((service) => (
-                <li key={service}>
-                  <a href="#" className="flex items-center gap-2 text-gray-400 hover:text-[#00A650] hover:translate-x-2 transition-all duration-300">
-                    <ArrowRight size={14} />
-                    {service}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* 4. Newsletter/Contact */}
-          <div>
-            <h4 className="text-xl font-bold mb-8 relative inline-block">
-              Subscribe
-              <span className="absolute -bottom-2 left-0 w-12 h-1 bg-[#00A650]"></span>
-            </h4>
-            <p className="text-gray-400 mb-6 text-[15px]">Get the latest news and updates from Cetro Cleaning.</p>
-            <div className="relative group">
+          <div className="flex flex-col sm:flex-row items-center gap-4 w-full justify-center">
+            <div className="w-full sm:w-[450px]">
               <input 
                 type="email" 
-                placeholder="Your email address" 
-                className="w-full bg-[#1A1A1A] border border-white/5 py-4 px-6 rounded-lg focus:outline-none focus:border-[#00A650] transition-colors"
+                placeholder="Email address..." 
+                className="w-full bg-white px-8 py-4 text-gray-800 rounded-full shadow-lg outline-none font-['Roboto_Flex']"
               />
-              <button className="absolute right-2 top-2 bottom-2 aspect-square bg-[#00A650] rounded-md flex items-center justify-center hover:bg-[#009448] transition-colors">
-                <Send size={18} />
-              </button>
             </div>
-            
-            <div className="mt-8 space-y-4">
-              <div className="flex items-center gap-4 text-gray-400">
-                <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-[#00A650]">
-                  <Phone size={18} />
-                </div>
-                <span>(+480) 123 678 900</span>
-              </div>
-              <div className="flex items-center gap-4 text-gray-400">
-                <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-[#00A650]">
-                  <Mail size={18} />
-                </div>
-                <span>info@cetro.com</span>
-              </div>
-            </div>
+            <button className="flex items-center justify-center gap-3 bg-[#00a650] text-white px-10 py-4 rounded-full font-bold hover:bg-[#008a42] transition-all shadow-lg active:scale-95 shrink-0">
+              Subscribe Now
+              <span className="bg-white rounded-full p-1 flex items-center justify-center">
+                <ArrowUpRight className="w-4 h-4 text-[#00a650]" strokeWidth={3} />
+              </span>
+            </button>
           </div>
-
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-gray-500 text-sm">© 2024 Cetro. All rights reserved.</p>
-          <div className="flex gap-8 text-sm text-gray-500">
-            <a href="#" className="hover:text-[#00A650] transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-[#00A650] transition-colors">Terms of Service</a>
-            <a href="#" className="hover:text-[#00A650] transition-colors">Cookies</a>
+        {/* --- SECTION 2: Main Footer (Responsive Grid) --- */}
+        <div className="py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-16 border-b border-white/10">
+          
+          {/* Logo Col */}
+          <div className="space-y-6">
+            <img src={logo} alt="Logo" className="h-10 w-auto" />
+            <p className="text-[17px] font-['Roboto_Flex'] text-gray-200 leading-relaxed max-w-[300px]">
+              We work with a passion of taking challenges and creating new ones in advertising sector.
+            </p>
           </div>
+
+          {/* Links Col */}
+          <div className="space-y-6 lg:pl-10">
+            <div className="flex flex-col gap-4 text-[17px] font-['Roboto_Flex'] font-bold">
+              {["About Us", "Services", "Pricing", "Blogs", "Contact Us"].map((link) => (
+                <a key={link} href="#" className="hover:text-[#00a650] transition-colors w-fit">{link}</a>
+              ))}
+            </div>
+          </div>
+
+          {/* Time Col */}
+          <div className="space-y-6">
+            <h4 className="text-[18px] font-black uppercase tracking-widest text-[#00a650]">Working Time</h4>
+            <div className="space-y-3 text-[17px] font-['Roboto_Flex'] text-gray-200">
+              <p>Mon - Fri: 9.00am - 5.00pm</p>
+              <p>Saturday: 10.00am - 6.00pm</p>
+              <p className="opacity-60">Sunday Closed</p>
+            </div>
+          </div>
+
+          {/* Contact Col */}
+          <div className="space-y-6">
+            <div className="border-b-2 border-[#00a650] inline-block pb-1">
+              <a href="tel:+0844560789" className="text-[#00a650] text-[22px] font-bold">+(084) 456-0789</a>
+            </div>
+            <h3 className="text-[24px] md:text-[28px] font-['Roboto_Flex'] font-bold">support@example.com</h3>
+            <div className="flex items-start gap-4 text-[15px] font-['Roboto_Flex'] text-gray-300">
+              <div className="bg-[#00a650] p-2 rounded-lg shrink-0">
+                <MapPin className="w-5 h-5 text-white" />
+              </div>
+              <p>5609 E Sprague Ave, Spokane Valley, WA 99212, USA</p>
+            </div>
+          </div>
+        </div>
+
+        {/* --- SECTION 3: Copyright Bar --- */}
+        <div className="py-10 flex items-center justify-center">
+          <p className="text-[16px] md:text-[18px] font-['Roboto_Flex'] text-gray-300">
+            © Copyright 2025 <span className="text-white font-bold">Cetro</span>. All rights reserved.
+          </p>
         </div>
       </div>
+
+      {/* FIXED Scroll-to-top Button (Visible har waqt scroll ke baad) */}
+      {isVisible && (
+        <button 
+          onClick={scrollToTop}
+          className="fixed bottom-8 right-8 z-[99] bg-[#00a650] p-3 rounded-2xl hover:bg-[#008a42] transition-all shadow-2xl animate-bounce md:animate-none"
+        >
+          <ArrowUp className="w-6 h-6 text-white" strokeWidth={3} />
+        </button>
+      )}
     </footer>
   );
 };

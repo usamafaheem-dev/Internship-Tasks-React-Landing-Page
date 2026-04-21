@@ -1,10 +1,41 @@
 import { ArrowRight, Search, UserRound, ShoppingCart } from 'lucide-react';
+import { useEffect, useRef } from 'react';
 import heroBg from '../assets/images/heroSectionImage.jpg';
 
 const Hero = () => {
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const animatedEls = section.querySelectorAll('.anim-up');
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            animatedEls.forEach((el) => {
+              el.classList.remove('in-view');
+              void el.offsetWidth;
+              el.classList.add('in-view');
+            });
+          } else {
+            animatedEls.forEach((el) => el.classList.remove('in-view'));
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section
       id="hero"
+      ref={sectionRef}
       className="relative w-full overflow-hidden flex items-center h-[85vh] min-[768px]:h-[120vh]"
       style={{ width: '100vw' }}
     >
@@ -15,17 +46,17 @@ const Hero = () => {
         style={{ width: '100%', height: '100%' }}
       />
 
-      {/* Dark overlay */}
       <div className="absolute inset-0 bg-black/60" />
 
-      {/* Content */}
       <div
         className="relative z-10 w-full h-full flex items-end justify-center px-6 pb-24 min-[768px]:items-center min-[768px]:justify-start min-[768px]:pb-28 min-[1201px]:pb-0 min-[768px]:pl-[124px] min-[768px]:pr-12"
-        style={{ fontFamily: '"Roboto Flex", "Helvetica Neue", Helvetica, Arial, sans-serif' }}
       >
         <div className="w-full max-w-[300px] min-[450px]:max-w-[360px] min-[768px]:max-w-[760px] flex flex-col justify-center items-center min-[768px]:justify-start min-[768px]:items-start text-center min-[768px]:text-left">
-          {/* Heading */}
-          <h1 className="font-bold leading-[1.03] tracking-[-0.4px] mb-5 text-[clamp(34px,11.8vw,48px)] min-[768px]:leading-[1.02] min-[768px]:tracking-[-0.6px] min-[768px]:mb-[30px] min-[768px]:text-[clamp(64px,7.6vw,108px)]" style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}>
+
+          <h1
+            className="anim-up font-bold leading-[1.03] tracking-[-0.4px] mb-5 text-[clamp(34px,11.8vw,48px)] min-[768px]:leading-[1.02] min-[768px]:tracking-[-0.6px] min-[768px]:mb-[30px] min-[768px]:text-[80px]"
+            style={{ animationDelay: '0.1s', fontFamily: "'Boldonse', sans-serif" }}
+          >
             <span className="text-white">Clean </span>
             <span className="text-[#00A650]">Space</span>
             <br />
@@ -33,14 +64,18 @@ const Hero = () => {
             <span className="text-white">Here</span>
           </h1>
 
-          {/* Subtext */}
-          <p className="text-white text-[clamp(16px,4.4vw,18px)] leading-[1.34] max-w-[285px] mb-6 min-[768px]:max-w-[520px] min-[768px]:mb-[34px]">
+          <p
+            className="anim-up text-white text-[clamp(16px,4.4vw,18px)] leading-[1.34] max-w-[285px] mb-6 min-[768px]:max-w-[520px] min-[768px]:mb-[34px]"
+            style={{ animationDelay: '0.35s' }}
+          >
             Professional cleaning services for offices, homes, and commercial
             spaces – done right, every time.
           </p>
 
-          {/* CTA Button */}
-          <button className="flex items-center gap-2 bg-[#00A650] hover:bg-[#009448] pl-7 pr-4 py-3.5 min-[768px]:pl-[31.2px] min-[768px]:pr-[16.8px] min-[768px]:py-[16.8px] rounded-full transition-all duration-300 group shadow-lg">
+          <button
+            className="anim-up flex items-center gap-2 bg-[#00A650] hover:bg-[#009448] pl-7 pr-4 py-3.5 min-[768px]:pl-[31.2px] min-[768px]:pr-[16.8px] min-[768px]:py-[16.8px] rounded-full transition-all duration-300 group shadow-lg"
+            style={{ animationDelay: '0.6s' }}
+          >
             <span
               className="text-white font-semibold text-[15px] min-[768px]:text-[16px]"
               style={{ fontFamily: '"Roboto Flex", "Helvetica Neue", Helvetica, Arial, sans-serif' }}
@@ -54,7 +89,6 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Bottom mobile/tablet bar (<=1200px) */}
       <div
         className="fixed inset-x-0 bottom-0 z-[60] h-[72px] w-full bg-white border-t border-gray-200 flex min-[1201px]:hidden"
         style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
